@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'bspg.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'form.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'column.css' %}">
+        <script src="{% static 'jso.js' %}"></script>
 
 	</head>
 	<body>
@@ -20,7 +21,7 @@
 			let client = new jso.JSO({
 				providerID: "HBP",
 				client_id: "af59e7dc-9ed7-4e7e-baac-9ce5cc0fed78",
-				redirect_uri: "http://bspg.pa.ibf.cnr.it:12456/test2/",
+				redirect_uri: "https://bspg.pa.ibf.cnr.it:14999/model/",
 				authorization: "https://services.humanbrainproject.eu/oidc/authorize",
 			});
 

@@ -1,6 +1,6 @@
 python3uwsgi
 venvgtalg
-gtalg-keys
+gtalg_keys
 db.sqlite3
 static/Connectivity*
 *.log
