@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--{% load static %}-->
+
+<html>
+	<head>
+	    <title>Model simulation</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+
+        <!--<link rel="stylesheet" href="bootstrap.css">-->
+        <link rel="stylesheet" type="text/css" href="{% static 'bspg.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'form.css' %}">
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'column.css' %}">
+
+	</head>
+	<body>
+	<div class="fixed-page-title row center-container">
+		<div class="col-sm-8 align-center">
+                <h4>A graph theoretical model to simulate brain connectivity</h4>
+        </div>
+		<div class="col-sm-2 align-right"></div>
+    </div>
+	<p>Here there are the degree distributions.</p>
+	<br>
+	
+	<div class="subtitle">
+			<p><b>Plots</b></p>
+	</div>
+	
+	<div id="graphs">
+	</div>
+	
+	
+	<script>
+		var binsi = {{ plotin }};
+		var binso = {{ plotout }};
+		var hdi = {{ hdi }};
+		var hdo = {{ hdo }};
+		var hsi = {{ hsi }};
+		var hso = {{ hso }};
+		var fn = '{{ filename }}'.replace('[&#39;','').replace('&#39;]','')
+	
+		var trace1 = {
+			y: hdi[0],
+			x: binsi[0],
+			type: 'scatter',
+			yaxis: 'y',
+			xaxis: 'x',
+			name: 'indeg data',
+		};
+
+		var trace2 = {
+			y: hsi[0],
+			x: binsi[0],
+			type: 'scatter',
+			yaxis: 'y',
+			xaxis: 'x',
+			name: 'indeg sim',
+		};
+		
+		
+		var trace3 = {
+			y: hdo[0],
+			x: binso[0],
+			type: 'scatter',
+			yaxis: 'y',
+			xaxis: 'x2',
+			name: 'outdeg data',
+		};
+
+		var trace4 = {
+			y: hso[0],
+			x: binso[0],
+			type: 'scatter',
+			yaxis: 'y',
+			xaxis: 'x2',
+			name: 'outdeg sim',
+		};
+
+		var data = [trace1, trace2, trace3, trace4];
+
+		
+		var layout = {
+		grid: {subplots:[['xy', 'x2y']]},};
+
+		var gd = document.getElementById('graphs')
+		Plotly.newPlot(gd, data, layout, {showSendToCloud: true});
+
+		gd.on('plotly_selected', function(eventData) {
+			console.log(eventData);
+			})
+		
+
+
+		var hiddenElement = document.createElement('a');
+
+		<!--hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);-->
+		fnd="{% get_static_prefix %}"+fn;
+		console.log(fnd)
+		hiddenElement.href = fnd;
+		hiddenElement.target = '_blank';
+		hiddenElement.download = fn;
+		hiddenElement.click();
+		
+		
+
+		<!--link.click();--> 
+		
+		<!--console.log(outstat)-->
+		<!--document.getElementById("testID").innerHTML = Ek-->
+	</script>
+	</body>
+</html>

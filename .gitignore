@@ -1,0 +1,10 @@
+python3uwsgi
+venvgtalg
+gtalg-keys
+db.sqlite3
+static/Connectivity*
+*.log
+*.pyc
+*.swp
+*.swo
+*.swn

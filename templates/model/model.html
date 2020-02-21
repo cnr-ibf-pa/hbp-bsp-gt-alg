@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+	<head>
+	    <title>Model simulation</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+
+        <!--<link rel="stylesheet" href="bootstrap.css">-->
+        <link rel="stylesheet" type="text/css" href="{% static 'bspg.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'form.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'column.css' %}">
+
+	</head>
+	<body>
+		<script>
+			
+			let client = new jso.JSO({
+				providerID: "HBP",
+				client_id: "af59e7dc-9ed7-4e7e-baac-9ce5cc0fed78",
+				redirect_uri: "http://bspg.pa.ibf.cnr.it:12456/test2/",
+				authorization: "https://services.humanbrainproject.eu/oidc/authorize",
+			});
+
+
+			try {
+					client.callback();
+				} catch (e) {
+					console.warn("Issue decoding the token");
+				}
+
+			var authorization = client.getToken();
+			authorization.then((session) => {
+				var access_token = session.access_token;
+			});
+			function setValue() {
+				document.getElementById('N').value = "0";
+				document.getElementById('Ek').value = "10";
+				document.getElementById('l').value = "15";
+				document.getElementById('rho').value = "0.1";
+				document.getElementById('m0').value = "100";
+				document.getElementById('phiu').value = "0.9";
+				document.getElementById('phid').value = "0.0005";
+				document.getElementById('phid').value = "0.0005";
+				document.getElementById('step').value = "15";
+				document.getElementById('next').value = "Run Preset";
+			}
+			</script>
+		<!--<iframe id="hbp_oidc_frame" src="https://services.humanbrainproject.eu/oidc/session-page" width="1" height="1" style="display: none"></iframe>-->
+            
+			<form action="/model/actionpage" method="POST" enctype="multipart/form-data" name="test"> {% csrf_token %}
+			<div class="fixed-page-title row center-container">
+                <!--<div class="col-sm-2 align-left">Initial parameters</div>-->
+                <div class="col-sm-8 align-center">
+                    <h4>A graph theoretical model to simulate brain connectivity</h4>
+                </div>
+                <div class="col-sm-2 align-right"></div>
+            </div>
+			<br>
+            <p>This tool creates a network based on the method described in the paper "Graph-theoretical Derivation of Brain Structural Connectivity". To build your network, the tool requires some input files. The default values reproduce the inhibitory network shown in figure 3B and 5A of the paper.</p>
+			<br>
+			
+			<div class="subtitle">
+			<p><b>Uploading degree sequences</b></p>
+			</div>
+			<p>Choose if upload the degree sequences or the list of connections.</p> 
+			<br>
+			<div class="data">
+			
+			<div class="box-upload">
+			
+			
+			<div class="deg_input">
+			<span style="padding-left:20px"><b>Upload the indegree sequence:</b></span>
+					<input type="file" name="in_file" id="in_file" value="Load your file"/>
+					<!--<input type="submit" name="upload_indegree" value="Upload" />-->
+			<span style="padding-left:20px"><b>Upload the outdegree sequence:</b></span>
+					<input type="file" name="out_file" id="out_file" value="Load your file"/>
+					<p>
+					<input type="button" name="set_Value" id="set_Value" value="Preset (Markram's Inhibitory network)" onclick="setValue()" />
+					</p>
+					<!--<input type="submit" name="upload_outdegree" value="Upload" />-->
+			</div>
+			
+			<div class="deg_info">
+				<p> The degree sequences are the lists of the indegree and the outdegree associated to every node. The files must be in csv format.</p>
+			</div>
+			
+			</div>
+
+			<div class="box-upload">			
+			<div class="adj_input">
+			<span style="padding-left:20px"><b>Upload your list of connections:</b></span>
+					<input type="file" name="conn_file" id="conn_file" />
+					<!--<input type="submit" name="upload_indegree" value="Upload" />-->
+					<!--<input type="submit" name="upload_outdegree" value="Upload" />-->
+
+			</div>
+			
+			<div class="adj_info">
+				<p> The list of connections file is a csv file of all the connections. The first column is the GID of the starting node and the second column is the GID of the terminal node.</p>
+			</div>
+			
+			</div>
+			</div>
+
+			<br>
+			<input type=submit value="Next" id="next">
+			<br>
+			<div class="subtitle">
+			<p><b> Setting the shape parameters </b></p>
+			</div>
+			
+			
+
+			<p> The shape parameters are real numbers which define the "shape" of the final degree distributions.</p>
+
+
+
+			<span style="padding-left:20px"><b>Insert below the shape parameters:</b></span>
+				
+			<div class="box-form">
+			
+			
+			
+			<table id="forms">
+			
+			<tr>
+				<th>
+				<label>N:</label><input type="text" name="N" id="N" size="5">
+				</th>
+				<th>
+				<p>N is the number of nodes (if set at zero will be calculated from the distributions). </p></div>
+				</th>
+			</tr>
+			
+			<tr>
+				<th>
+				<label>E<sub>K </sub>:</label><input type="text" name="Ek" id="Ek" size="5">
+				</th>
+				<th>
+				<p>E<sub>K </sub> defines the expected value of the kernel; in other words, it indicates the 
+				approximate beginning of the tail. Its value can be anywhere between 0 and the max degree. </p></div>
+				</th>
+			</tr>
+				
+			<tr>
+				<th>
+				<label>l:</label><input type="text" name="l" id="l" size="5">
+				</th>
+				<th>
+				<p>l defines size of the kernel; high values result in a reduced 
+				power law tail. The range can be an integer from 1 to the number of nodes.</p>
+				</th>
+			</tr>
+				
+			<tr>
+				<th>
+				<label><span>&#961 </span>:</label><input type="text" name="rho" id="rho" size="5">
+				</th>
+				<th>
+				<p><span>&#961 </span>, is a probability correlated with the initial state of the power law model; 
+				it has little impact on the distribution shape but can have significant consequences on the computing time.</p>
+				</th>
+			</tr>
+			
+			<tr>
+				<th>
+				<label>m<sub>0 </sub>:</label><input type="text" name="m0" id="m0" size="5">
+				</th>
+				<th>
+				<p>m<sub>0</sub>, is an integer correlated with the initial state of the power law model; 
+				it has a little impact on the distribution shape but can have significant consequences on the computing time. Its value must be lower than N/2.</p>
+				</th>
+			</tr>
+				
+			<tr>
+				<th>
+				<label><span>&#934 </span><sub>U </sub>:</label><input type="text" name="phiu" id="phiu" size="5">
+				</th>
+				<th>
+				<p><span>&#934 </span><sub>U </sub>defines the maximum connectivity probability, low values can lead to a power law behaviour.</p>
+				</th>
+			</tr>
+				
+			<tr>
+				<th>
+				<label><span>&#934 </span><sub>D </sub>:</label><input type="text" name="phid" id="phid" size="5">
+				</th>
+				<th>
+				<p><span>&#934 </span><sub>D </sub> defines the minimum connectivity probability, high values can lead to a distribution with a too accentuated exponential behavior low values will generate 
+				a distribution very close to a power law.</p>
+				</th>
+			</tr>
+			
+			<tr>
+				<th>
+				<label>step:</label><input type="text" name="step" id="step" size="5">
+				</th>
+				<th>
+				<p>The bin size of the histogram of the degree distributions.</p>
+				</th>
+			</tr>
+			
+			</table>
+				
+			</div>
+			<br>
+			<input type=submit value="Next" id="next">
+			</form>
+			<br>
+			
+			
+			
+			
+	</body>
+</html>

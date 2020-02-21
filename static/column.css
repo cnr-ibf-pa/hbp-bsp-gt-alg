@@ -1,0 +1,63 @@
+
+
+
+.data{
+  max-width: 1800px;
+  
+}
+
+.box-upload{
+	
+	border: 1px solid rgba(83, 198, 140,1.0);
+	width: 50%;
+	display: table-cell;
+	vertical-align: down;
+	
+}
+
+.deg_input {
+	width: 45%;
+	display: table-cell;
+	vertical-align: down;
+}
+
+.deg_info {
+	width: 55%;
+	display: table-cell;
+	vertical-align: down;
+}
+
+.adj_input {
+	width: 45%;
+	display: table-cell;
+	vertical-align: down;
+}
+
+.adj_info {
+	width: 55%;
+	display: table-cell;
+	vertical-align: down;
+}
+
+.box-graph{
+	
+	border: 1px solid rgba(83, 198, 140,1.0);
+	width: 100%;
+	display: table-cell;
+	vertical-align: down;
+	
+}
+
+table {
+  border-collapse: collapse;
+  background: white;
+}
+
+table, th, td {
+  background: white;
+  text-align: left;
+  font-weight: normal;
+}
+
+
+
