@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = keys.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['*']
@@ -129,4 +129,9 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    os.path.join('mnt','bsp-gtalg-storage', 'connectivity')
 ]
+
+
+MEDIA_ROOT = "/mnt/bsp-gtalg-storage/connectivity"
+MEDIA_URL = "/connectivity/"

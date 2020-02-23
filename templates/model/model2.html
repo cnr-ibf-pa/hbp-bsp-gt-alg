@@ -97,7 +97,8 @@
 		var hiddenElement = document.createElement('a');
 
 		<!--hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);-->
-		fnd="{% get_static_prefix %}"+fn;
+		//fnd="{% get_static_prefix %}"+fn;
+		fnd="/media/"+fn;
 		console.log(fnd)
 		hiddenElement.href = fnd;
 		hiddenElement.target = '_blank';

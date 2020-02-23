@@ -152,8 +152,8 @@ def test_sim(data_indeg,data_outdeg,Ek,l,rho,m0,pup,pdw,N,tsp):
     gamma_true=N1/(N1-m0)*alpha_true-m0/(N1-m0)*iota
     gamma_true=gamma_true/sum(gamma_true)
     
-    clc=open('static/Connectivity'+tsp+'.txt', 'w').close()
-    file=open('static/Connectivity'+tsp+'.txt', 'w+')
+    clc=open('/mnt/bsp-gtalg-storage/connectivity/Connectivity'+tsp+'.txt', 'w').close()
+    file=open('/mnt/bsp-gtalg-storage/connectivity/Connectivity'+tsp+'.txt', 'w+')
     file.write('This file was created by the Human Brain Project Platform (From the paper Giacopelli et al 2020)\r\n')
     file.write('This is the connectivity data for a network with parameters N='+str(N)+', Ek='+str(Ek)+', l='+str(l)+', rho='+str(rho)+', m0='+str(m0)+', phi_up='+str(pup)+' and phi_down='+str(pdw)+'\r\n' )
     file.write("start\tend\r\n")
@@ -180,7 +180,7 @@ def test_sim(data_indeg,data_outdeg,Ek,l,rho,m0,pup,pdw,N,tsp):
                         if (np.random.rand()<pdw):
                             file.write(str(N1+i)+"\t"+str(j)+"\r\n")
 							
-    #pprint.pprint((1.0*li)/M)
+        #pprint.pprint((1.0*li)/M)
 						
     for li in range(0,M):
         for lj in range(0,M):
@@ -242,8 +242,9 @@ def actionpage(request):
                 indeg.append(list(InConn).count(gid))
                 outdeg.append(list(OutConn).count(gid))
                 if cg%1000==0:
+                    pass
                     #pprint.pprint(cg)
-                    cg=cg+1
+                cg=cg+1
             indeg=np.array(indeg)
             outdeg=np.array(outdeg)
 	    #pprint.pprint('Data loaded!')
@@ -267,7 +268,7 @@ def actionpage(request):
         sim_indeg=np.zeros(N)
         sim_outdeg=np.zeros(N)
         
-        lineList = [line.rstrip('\n') for line in open('static/Connectivity'+tsp+'.txt')]
+        lineList = [line.rstrip('\n') for line in open('/mnt/bsp-gtalg-storage/connectivity/Connectivity'+tsp+'.txt')]
 
         lln=len(lineList)
         #pprint.pprint(lineList)
