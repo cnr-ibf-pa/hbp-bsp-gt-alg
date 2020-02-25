@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import QueryDict
 
+import sys
+import json
 import csv
 import pprint
 import numpy as np
@@ -9,13 +11,31 @@ import matplotlib.pyplot as plt
 import time
 import scipy.io as io
 import random
+import logging
+import datetime
+
 from scipy.stats import binom
 from scipy.special import beta
 
+# set logging up
+logging.basicConfig(stream=sys.stdout)
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+# create logger if not in DEBUG mode
+accesslogger = logging.getLogger('gtalg_access.log')
+accesslogger.addHandler(logging.FileHandler('/var/log/gtalg/gtalg_access.log'))
+accesslogger.setLevel(logging.DEBUG)
+
 def index(request):
     return render(request, 'model/model.html')
-    #return HttpResponse("<b>Hello, world. You're at the polls index.</b>")
-    
+
+def log_user(request, user_id, pagename):
+
+    accesslogger.info("At " + str(datetime.datetime.now()) + " user " + user_id + " entered page " + pagename)
+
+    return HttpResponse(json.dumps({"response":"ok"}), content_type="application/json")
+
 def read_csv(request,field):
     try:
         stp = str(request.FILES[field].read()).replace("'", "").replace("b", "")

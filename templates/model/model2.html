@@ -13,6 +13,19 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'form.css' %}">
 		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'column.css' %}">
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="{% static 'jso.js' %}"></script>
+        <script src="{% static 'auth.js' %}"></script>
+
+        <script>
+            // prompt login page if user is not authenticated
+            authorize();	
+
+            // when document ready, send request for logging in user
+            $(document).ready(function() {
+                getUserInfo("model2");
+            });
+        </script>
 
 	</head>
 	<body>
