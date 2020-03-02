@@ -3,6 +3,7 @@
 
 <html>
     <head>
+        <script type="text/javascript" src="../../static/load_ga.js"></script>
         <title>Model simulation</title>
 
         <meta charset="utf-8">
@@ -26,9 +27,22 @@
 
             // when document ready, send request for logging in user
             $(document).ready(function() {
-                getUserInfo("model");
+                var userid = getUserInfo("model");
+                hideWaitMessage();
+                $('#next01').click(showWaitMessage);
+                $('#next02').click(showWaitMessage);
             });
-        
+
+function hideWaitMessage(){
+     $('#nextbtn01div').css('visibility', 'hidden');
+     $('#nextbtn02div').css('visibility', 'hidden');
+}
+
+function showWaitMessage(){
+     $('#nextbtn01div').css('visibility', 'visible');
+     $('#nextbtn02div').css('visibility', 'visible');
+}
+
 function setValue() {
     document.getElementById('N').value = "0";
     document.getElementById('Ek').value = "10";
@@ -39,13 +53,17 @@ function setValue() {
     document.getElementById('phid').value = "0.0005";
     document.getElementById('phid').value = "0.0005";
     document.getElementById('step').value = "15";
-    document.getElementById('next').value = "Run Preset";
+    document.getElementById('next01').value = "Run Preset";
+    document.getElementById('next02').value = "Run Preset";
+}
+function submit_form(){
+
 }
         </script>
 
 
         <!--<iframe id="hbp_oidc_frame" src="https://services.humanbrainproject.eu/oidc/session-page" width="1" height="1" style="display: none"></iframe>-->
-        <form action="/model/actionpage" method="POST" enctype="multipart/form-data" name="test"> {% csrf_token %}
+        <form action="/model/actionpage/" method="POST" enctype="multipart/form-data" name="test"> {% csrf_token %}
             <div class="fixed-page-title row center-container">
                 <!--<div class="col-sm-2 align-left">Initial parameters</div>-->
                 <div class="col-sm-8 align-center">
@@ -104,8 +122,10 @@ function setValue() {
             </div>
 
             <br>
-            <input type=submit value="Next" id="next">
-            <br>
+            <input type=submit value="Next" id="next01">
+            <div id="nextbtn01div">
+                <img src="{% static "img/please-wait.gif" %}" width=35px;>
+            </div>
             <div class="subtitle">
                 <p><b> Setting the shape parameters </b></p>
             </div>
@@ -205,7 +225,11 @@ function setValue() {
 
                 </div>
                 <br>
-                <input type=submit value="Next" id="next">
+                <input type=submit value="Next" id="next02">
+            <br>
+            <div id="nextbtn02div">
+                <img src="{% static "img/please-wait.gif" %}" width=35px;>
+            </div>
         </form>
         <br>
     </body>

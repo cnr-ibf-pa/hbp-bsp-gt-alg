@@ -9,6 +9,7 @@ function getUserInfo(pagename){
     // reauthorize if needed
     authorize();
     var current_token = sessionStorage.getItem('token');
+    var userid = "";
 
     fetch('https://services.humanbrainproject.eu/idm/v1/api/user/me',{
             method: 'get',
@@ -19,7 +20,9 @@ function getUserInfo(pagename){
     .then(response => response.json())
         .then(data => {
             fetch('/model/log_user/' + data["id"] + '/' + pagename)
+            userid = data["id"]
         });
+    return userid
 }
 
 function authorize(){

@@ -11,6 +11,6 @@ urlpatterns = [
     #path('', views.index, name='index'),
 	#path('action_page', views.index, name='index'),
 	url(r'^$', views.index),    
-    url(r'^actionpage$', views.actionpage),
+    url(r'^actionpage/$', views.actionpage),
     url(r'^log_user/(?P<user_id>[0-9]+)/(?P<pagename>[0-9a-zA-Z_\-]+)$', views.log_user),
 ]
