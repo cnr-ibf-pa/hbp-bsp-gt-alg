@@ -222,7 +222,6 @@ def test_sim(data_indeg,data_outdeg,Ek,l,rho,m0,pup,pdw,N,tsp):
     
 
 def actionpage(request):
-    #pprint.pprint(request.POST)
 	
     try:
         N=int(request.POST['N'])
