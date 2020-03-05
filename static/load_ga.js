@@ -9,7 +9,7 @@ var url = window.location.href;
 if (url.includes("https://bsp-gtalg.cineca.it")){
 	console.log("Loading ga for PROD (vm on CINECA)")
     ga_script_g.src = 'https://www.googletagmanager.com/gtag/js?id=UA-91794319-9';
-    ga_script.src = './gtag.js';
+    ga_script.src = '/static/gtag.js';
 } else {
     console.log("Not loading google analytics tags: probably you are not running this from the production site");
 } 
