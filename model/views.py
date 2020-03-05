@@ -32,7 +32,7 @@ def index(request):
 
 def log_user(request, user_id, pagename):
 
-    accesslogger.info("At " + str(datetime.datetime.now()) + " user " + user_id + " entered page " + pagename)
+    accesslogger.info(str(datetime.datetime.now()) + "\t" + user_id + "\t" + pagename)
 
     return HttpResponse(json.dumps({"response":"ok"}), content_type="application/json")
 
