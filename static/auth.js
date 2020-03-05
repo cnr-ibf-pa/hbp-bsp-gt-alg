@@ -1,7 +1,20 @@
+var client_id = "";
+var redirect_uri = "";
+
+if (url.includes("https://bsp-gtalg.cineca.it")){
+	console.log("Loading setting client id PROD (vm on CINECA)");
+    client_id = '9788129e-d0a1-4e1a-bb17-6eb07b779609';
+    redirect_uri= "https://bsp-gtalg.cineca.it/model/";
+} else if (url.includes("https://bspg.pa.ibf.cnr.it:14999")){
+	console.log("Loading client id DEV (vm on bspg.pa.ibf.cnr.it)");
+    client_id = "af59e7dc-9ed7-4e7e-baac-9ce5cc0fed78";
+    redirect_uri = "https://bspg.pa.ibf.cnr.it:14999/model/";
+} 
+
 let client = new jso.JSO({
     providerID: "HBP",
-    client_id: "af59e7dc-9ed7-4e7e-baac-9ce5cc0fed78",
-    redirect_uri: "https://bspg.pa.ibf.cnr.it:14999/model/",
+    client_id : client_id,
+    redirect_uri : redirect_uri,
     authorization: "https://services.humanbrainproject.eu/oidc/authorize",
 });
 
